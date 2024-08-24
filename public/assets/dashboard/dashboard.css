@@ -1,0 +1,47 @@
+body {
+    background-color: #532915;
+  }
+.container.continer_dash{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.card-header.cus_nav {
+    background-color: #459b96;
+}
+
+@media (min-width: 1800px) {
+    .container {
+        max-width: 1500px !important; 
+    }
+  }
+
+  nav#sidebar {
+    width: 18rem;
+}
+
+.card.cust_card_body {
+    background-color: #f2fcff;
+}
+
+a.nav-link.link-dark {
+    color: #459b96 !important;
+}
+#cust_but {
+    background-color: #459b96 !important;
+}
+.content_custi {
+    padding: 3px 0px 0px 15px !important;
+}
+
+i#plus_butt {
+    font-size: x-large;
+    color: #532915;
+}
+strong#head_dash {
+    font-size: 29px;
+    font-family: 'FontAwesome';
+}
+
+span#head2_dash {
+    font-size: 23px;
+}
