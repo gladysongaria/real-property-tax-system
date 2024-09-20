@@ -8,9 +8,13 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <i class="bi bi-plus-square-fill" id="plus_butt"></i>
-                </div>
 
+                    <a data-bs-toggle="modal" data-bs-target="#create" type="button"><i class="bi bi-plus-square-fill"
+                            id="plus_butt"></i>
+                    </a>
+
+                    @include('properties.create')
+                </div>
             </div>
         </div>
         <br>
@@ -76,9 +80,9 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        <a class="link-secondary" :href="route('logout')" onclick="event.preventDefault();
+                    <a class="link-secondary" :href="route('logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">Logout
-                        </a>
+                    </a>
                 </form>
             </div>
         </div>

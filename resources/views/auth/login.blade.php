@@ -7,6 +7,14 @@
             <h3><strong>Welcome</strong></h3>
             <center><span>Please enter your details</span></center>
 
+            @error('username')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
+            @error('password')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
@@ -25,11 +33,13 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
-                            <input type="checkbox" class="form-check-input" id="remember_me">
+                            <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
                             <label class="form-check-label" for="remember_me">{{ __('Remember me') }}</label>
                         </div>
                         <div class="col">
-                            <a href="#" class="ForgetPwd">Forget Password?</a>
+                            @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" class="ForgetPwd">Forget Password?</a>
+                            @endif
                         </div>
                     </div>
                 </div>
