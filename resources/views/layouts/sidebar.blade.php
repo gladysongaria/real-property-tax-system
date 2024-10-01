@@ -60,13 +60,15 @@
                         Penalties Management
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link link-dark">
-                        <i class="fa fa-users" aria-hidden="true"></i>
+                @if(auth()->user()->user_role == 'Super_Admin')
 
+                <li>
+                    <a href="{{route("users.index")}}" class="nav-link link-dark">
+                        <i class="fa fa-users" aria-hidden="true"></i>
                         User Management
                     </a>
                 </li>
+                @endif
             </ul>
 
             <br>
