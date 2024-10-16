@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-2">
 
-                    <a data-bs-toggle="modal" data-bs-target="#create" type="button"><i class="bi bi-plus-square-fill"
+                    <a data-bs-toggle="modal" data-bs-target="#new_property" type="button"><i class="bi bi-plus-square-fill"
                             id="plus_butt"></i>
                     </a>
 
