@@ -17,4 +17,10 @@ class Owner extends Model
         'address',
         'status_id'
     ];
+
+      // One Owner can have many Properties
+      public function properties()
+      {
+          return $this->hasMany(Property::class);
+      }
 }

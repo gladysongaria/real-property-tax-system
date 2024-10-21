@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $statuses = Status::all();
         $classification = Classification::all();
-        $properties = Property::all();
+        $properties = Property::with('owner')->get();
 
         return view('dashboard', compact('statuses', 'classification', 'properties'));
     }

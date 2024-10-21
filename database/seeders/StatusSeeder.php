@@ -15,10 +15,16 @@ class StatusSeeder extends Seeder
     {
         DB::table('statuses')->insert([
             [
-                'status_name' => 'Single',
+                'status_name' => 'Active',
             ],
             [
-               'status_name' => 'Married',
+               'status_name' => 'Inactive',
+            ],
+            [
+               'status_name' => 'Out of Town',
+            ],
+            [
+               'status_name' => 'Deceased',
             ],
         ]);
     }

@@ -7,14 +7,7 @@
                         <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
                     </div>
                 </div>
-                <div class="col-2">
 
-                    <a data-bs-toggle="modal" data-bs-target="#new_property" type="button"><i class="bi bi-plus-square-fill"
-                            id="plus_butt"></i>
-                    </a>
-
-                    @include('properties.create')
-                </div>
             </div>
         </div>
         <br>
@@ -23,16 +16,27 @@
             <h6 class="mb-2 card-subtitle text-muted">Activities</h6>
             <ul class="mb-auto nav nav-pills flex-column ">
                 <li class="nav-item">
+                    <a href="{{route("dashboard")}}" class="nav-link link-dark" aria-current="page">
+                        <i class="bi bi-card-checklist"> </i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="#" class="nav-link link-dark" aria-current="page">
                         <i class="bi bi-card-checklist"> </i>
                         <span>Payments</span>
                     </a>
                 </li>
+
                 <li>
-                    <a href="#" class="nav-link link-dark">
+                    <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#new_property" type="button">
                         <i class="bi bi-house-add"></i>
                         New Porperty
                     </a>
+
+                    @include('properties.create')
+
                 </li>
             </ul>
             <br>

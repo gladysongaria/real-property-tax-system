@@ -11,17 +11,29 @@
                 <th>Barangay</th>
                 <th>Assessed Value</th>
                 <th>Market Value</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($properties as $property)
             <tr>
-                <th scope="row">{{$property->owner_id}}</th>
+                <th scope="row">{{ $property->owner->last_name }}, {{ $property->owner->first_name }} {{
+                    $property->owner->middle_name ?? '' }}</th>
                 <td>{{$property->tax_declaration}}</td>
                 <td>{{$property->location}}</td>
                 <td>{{$property->barangay}} </td>
                 <td>{{$property->assess_value}}</td>
                 <td>{{$property->market_value}}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#" type="button"><i class="bi bi-pen"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#delete{{$property->id}}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
             </tr>
 
             @endforeach

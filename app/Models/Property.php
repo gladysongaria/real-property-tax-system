@@ -22,4 +22,10 @@ class Property extends Model
         'date_approved'
     ];
 
+     // A Property belongs to an Owner
+     public function owner()
+     {
+         return $this->belongsTo(Owner::class);
+     }
+
 }
