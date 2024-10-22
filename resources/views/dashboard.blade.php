@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 
-<div class=" content_custi">
+<div class=" content_custi" style="width: 100%;">
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
