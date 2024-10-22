@@ -2,7 +2,7 @@
     <div class="p-1">
         <div class="container">
             <div class="row">
-                <div class="col-10">
+                <div class="col-12">
                     <div class="form-outline" data-mdb-input-init>
                         <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
                     </div>
@@ -17,7 +17,7 @@
             <ul class="mb-auto nav nav-pills flex-column ">
                 <li class="nav-item">
                     <a href="{{route("dashboard")}}" class="nav-link link-dark" aria-current="page">
-                        <i class="bi bi-card-checklist"> </i>
+                        <i class="bi bi-house"> </i>
                         <span>Dashboard</span>
                     </a>
                 </li>
