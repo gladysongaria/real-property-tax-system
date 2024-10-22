@@ -22,9 +22,12 @@
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.css') }}">
 
-
+    <script src="{{ asset('/assets/jquery.js') }}"type="text/javascript"></script>
     <script src="{{ asset('assets/bootstrap5/js/bootstrap.css') }}"></script>
     <script src="{{ asset('') }}assets/bootstrap5/js/bootstrap.js"></script>
+    <script src="{{ asset('') }}assets/bootbox/bootbox.js"></script>
+    <script src="{{ asset('') }}assets/bootbox/bootbox.all.js"></script>
+    @yield('js')
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.json') }}">
 
 </head>
@@ -50,7 +53,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('backend/assets/libs/jquery/jquery.min.js') }}"></script>
+   
 
 </body>
 
