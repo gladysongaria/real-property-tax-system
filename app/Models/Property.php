@@ -10,7 +10,6 @@ class Property extends Model
     use HasFactory;
 
     protected $fillable = [
-        'owner_id',
         'tax_declaration',
         'location',
         'barangay',
@@ -22,10 +21,14 @@ class Property extends Model
         'date_approved'
     ];
 
-     // A Property belongs to an Owner
-     public function owner()
-     {
-         return $this->belongsTo(Owner::class);
-     }
+    // Define many-to-many relationship
+    public function owners()
+    {
+        return $this->belongsToMany(Owner::class, 'property_owners');
+    }
 
+    public function paymentTerms()
+    {
+        return $this->hasMany(PaymentTerm::class);
+    }
 }

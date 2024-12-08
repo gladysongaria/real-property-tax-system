@@ -34,7 +34,6 @@ return new class extends Migration
 
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->constrained('owners')->onDelete('cascade');
             $table->string('tax_declaration');
             $table->string('location');
             $table->string('barangay');
@@ -46,6 +45,14 @@ return new class extends Migration
             $table->date('date_approved');
             $table->timestamps();
         });
+
+        Schema::create('payment_terms', function (Blueprint $table) {
+            $table->id();
+            $table->integer('year');
+            $table->foreignId('property_id')->constrained()->onDelete('cascade');
+            $table->boolean('paid')->default(0); // Default value is 0 (not paid)
+            $table->timestamps();
+        });
     }
 
     /**
@@ -53,6 +60,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists( 'statuses', 'classifications','owners', 'properties' );
+        Schema::dropIfExists('statuses', 'classifications', 'owners', 'properties');
     }
 };

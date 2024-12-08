@@ -18,9 +18,10 @@ class Owner extends Model
         'status_id'
     ];
 
-      // One Owner can have many Properties
-      public function properties()
-      {
-          return $this->hasMany(Property::class);
-      }
+    // Define many-to-many relationship
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class, 'property_owners');
+    }
 }
+

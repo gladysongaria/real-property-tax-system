@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classification;
 use App\Models\Owner;
 use App\Models\Status;
 use App\Models\Property;
-use GuzzleHttp\Handler\Proxy;
+use App\Models\PaymentTerm;
 use Illuminate\Http\Request;
+use GuzzleHttp\Handler\Proxy;
+use App\Models\Classification;
 
 class PropertyController extends Controller
 {
@@ -16,7 +17,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-       //
+        //
     }
 
     /**
@@ -32,18 +33,17 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        // Step 1: Validate the request data
         $request->validate([
-            'last_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'ext_name' => 'nullable|string|max:255',
-            'address' => 'required|string|max:255',
-            'status_name' => 'required|exists:statuses,id',  // Ensure the selected status exists
+            'last_name.*' => 'required|string|max:255',
+            'first_name.*' => 'required|string|max:255',
+            'middle_name.*' => 'nullable|string|max:255',
+            'ext_name.*' => 'nullable|string|max:255',
+            'address.*' => 'required|string|max:255',
+            'status.*' => 'required|exists:statuses,id',
             'tax_declaration' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
-            'classification_id' => 'required|exists:classifications,id',  // Ensure the classification exists
+            'classification_id' => 'required|exists:classifications,id',
             'market_value' => 'required|numeric',
             'assessed_value' => 'required|numeric',
             'sub_class' => 'nullable|string|max:255',
@@ -51,19 +51,8 @@ class PropertyController extends Controller
             'date_approved' => 'required|date',
         ]);
 
-        // Step 2: Create a new owner record in the 'owners' table
-        $owner = Owner::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'ext_name' => $request->ext_name,
-            'address' => $request->address,
-            'status_id' => $request->status_name,
-        ]);
-
-        // Step 3: Create a new property record in the 'properties' table linked with the owner_id
+        // Step 1: Create the property
         $property = Property::create([
-            'owner_id' => $owner->id,  // Associate the property with the owner's ID
             'tax_declaration' => $request->tax_declaration,
             'location' => $request->location,
             'barangay' => $request->barangay,
@@ -75,8 +64,34 @@ class PropertyController extends Controller
             'date_approved' => $request->date_approved,
         ]);
 
-        // Step 4: Return a success response or redirect
-        return redirect()->back()->with('success', 'Owner and property added successfully.');
+        // Step 2: Create the owners and attach them to the property
+        foreach ($request->last_name as $index => $lastName) {
+            $owner = Owner::create([
+                'last_name' => $lastName,
+                'first_name' => $request->first_name[$index],
+                'middle_name' => $request->middle_name[$index],
+                'ext_name' => $request->ext_name[$index],
+                'address' => $request->address[$index],
+                'status_id' => $request->status[$index],
+            ]);
+
+            $property->owners()->attach($owner->id);
+        }
+
+        // Step 3: Create payment terms for each year from one year after approval to the current year
+        $startYear = (int) date('Y', strtotime($request->date_approved)) + 1;
+        $currentYear = (int) date('Y');
+
+        for ($year = $startYear; $year <= $currentYear; $year++) {
+            PaymentTerm::create([
+                'property_id' => $property->id,
+                'paid' => 0,
+                'year' => $year// Default value is unpaid
+            ]);
+        }
+
+        // Step 4: Redirect or return success
+        return redirect()->back()->with('success', 'Property and owners added successfully.');
     }
 
     /**

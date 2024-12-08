@@ -32,7 +32,7 @@
                 <li>
                     <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#new_property" type="button">
                         <i class="bi bi-house-add"></i>
-                        New Porperty
+                        New Property
                     </a>
 
                     @include('properties.create')
@@ -53,14 +53,12 @@
                 <li>
                     <a href="#" class="nav-link link-dark">
                         <i class="fa fa-university" aria-hidden="true"></i>
-
                         Transaction Reports
                     </a>
                 </li>
                 <li>
                     <a href="#" class="nav-link link-dark">
                         <i class="bi bi-calculator"></i>
-
                         Penalties Management
                     </a>
                 </li>

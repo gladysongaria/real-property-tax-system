@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TaxPaymentController;
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -19,6 +20,9 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::delete('/users/{user}', [ UserController::class, 'destroy'])->name('users.destroy');
 
     Route::resource('properties', PropertyController::class);
+
+    Route::post('/tax-payments/store-multiple', [TaxPaymentController::class, 'storeMultipleTaxPayments'])->name('tax-payments.store-multiple');
+
 });
 
 require __DIR__.'/auth.php';
