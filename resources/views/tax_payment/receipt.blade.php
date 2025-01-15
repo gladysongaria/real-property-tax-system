@@ -43,7 +43,7 @@
                     </tbody>
                 </table>
 
-                <div class="row mt-4">
+                <div class="mt-4 row">
                     <div class="col-6">
                         <p><strong>Total Tax:</strong> <span id="totalTaxDue">₱0.00</span></p>
                         <p><strong>Total SEF:</strong> <span id="totalSefDue">₱0.00</span></p>
