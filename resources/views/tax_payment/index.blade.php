@@ -6,7 +6,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>TAX PAYMENT</strong></h1>
             </div>
             <div class="modal-body">
-                <form action="{{ route('tax-payments.store-multiple') }}" method="POST">
+                <form action="{{ route('tax-payments.pay-taxes') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-4">
@@ -28,6 +28,13 @@
                                 <input type="date" class="form-control" id="ordate" name="or_date" required>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="isOwnerTaxpayer" name="is_owner_taxpayer">
+                        <label class="form-check-label" for="isOwnerTaxpayer">
+                            Owner is the Tax Payer
+                        </label>
                     </div>
 
                     <p><strong>Queued Property/ies</strong></p>
@@ -106,101 +113,102 @@
     document.addEventListener('DOMContentLoaded', () => {
     const availablePropertiesTable = document.getElementById('available_properties');
     const queuedPropertiesTable = document.getElementById('queued_properties');
-    const searchInput = document.getElementById('property_search'); // Search input field
+    const searchInput = document.getElementById('property_search');
 
-    // Add event listener to search input
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
+    // Helper: Create property row for available table
+    function createAvailablePropertyRow(propertyId, propertyInfo) {
+        const restoredRow = document.createElement('tr');
+        restoredRow.setAttribute('id', `property_${propertyId}`);
+        restoredRow.innerHTML = `
+            <td>${propertyInfo.owners}</td>
+            <td>${propertyInfo.tax_declaration}</td>
+            <td>${propertyInfo.location}</td>
+            <td>${propertyInfo.barangay}</td>
+            <td>${propertyInfo.assess_value}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-primary add-to-queue"
+                    data-id="${propertyId}"
+                    data-info='${JSON.stringify(propertyInfo)}'>
+                    Add
+                </button>
+            </td>
+        `;
+        return restoredRow;
+    }
 
-        // Loop through the rows in the available properties table
-        const rows = availablePropertiesTable.querySelectorAll('tr');
-        rows.forEach(row => {
-            const ownerCell = row.cells[0]; // Owner(s) cell
-            const taxDeclarationCell = row.cells[1]; // Tax Declaration cell
+    // Helper: Create property row for queued table
+    function createQueuedPropertyRow(propertyId, propertyInfo) {
+        const paymentTerms = propertyInfo.payment_terms || [];
+        let termOptions = '';
 
-            // Check if the query matches any part of the owner's name or tax declaration
-            const ownerText = ownerCell ? ownerCell.textContent.toLowerCase() : '';
-            const taxDeclarationText = taxDeclarationCell ? taxDeclarationCell.textContent.toLowerCase() : '';
-
-            // Show or hide the row based on the search query
-            if (ownerText.includes(query) || taxDeclarationText.includes(query)) {
-                row.style.display = ''; // Show the row
-            } else {
-                row.style.display = 'none'; // Hide the row
-            }
+        paymentTerms.forEach(term => {
+            termOptions += `<option value="${term.id}">${term.year}</option>`;
         });
-    });
 
-    // Add event listener for adding properties to the queue
-    document.querySelectorAll('.add-to-queue').forEach(button => {
-        button.addEventListener('click', () => {
+        const newRow = document.createElement('tr');
+        newRow.setAttribute('id', `queued_${propertyId}`);
+        newRow.innerHTML = `
+            <td>${propertyInfo.tax_declaration}</td>
+            <td>${propertyInfo.barangay}</td>
+            <td>${propertyInfo.assess_value}</td>
+            <td>
+                <select name="particulars[${propertyId}][term]" class="form-select" required>
+                    ${termOptions}
+                </select>
+            </td>
+            <td>
+                <button type="button" class="btn btn-sm btn-danger remove-from-queue" data-id="${propertyId}">
+                    Remove
+                </button>
+                <input type="hidden" name="particulars[${propertyId}][property_id]" value="${propertyId}">
+            </td>
+        `;
+        return newRow;
+    }
+
+    // Add to Queue: Event Delegation
+    availablePropertiesTable.addEventListener('click', (event) => {
+        if (event.target.classList.contains('add-to-queue')) {
+            const button = event.target;
             const propertyId = button.getAttribute('data-id');
             const propertyInfo = JSON.parse(button.getAttribute('data-info'));
-            const paymentTerms = propertyInfo.payment_terms; // Unpaid terms
+            const paymentTerms = propertyInfo.payment_terms;
 
             if (!paymentTerms || paymentTerms.length === 0) return;
 
-            // Generate dropdown options for the term
-            let termOptions = '';
-            paymentTerms.forEach(term => {
-                termOptions += `<option value="${term.id}">${term.year}</option>`;
-            });
-
-            // Add to queued properties
-            const newRow = document.createElement('tr');
-            newRow.setAttribute('id', `queued_${propertyId}`);
-            newRow.innerHTML = `
-                <td>${propertyInfo.tax_declaration}</td>
-                <td>${propertyInfo.barangay}</td>
-                <td>${propertyInfo.assess_value}</td>
-                <td>
-                    <select name="term[${propertyId}]" class="form-select" required>
-                        ${termOptions}
-                    </select>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-danger remove-from-queue" data-id="${propertyId}">Remove</button>
-                    <input type="hidden" name="property_ids[]" value="${propertyId}">
-                </td>
-            `;
+            const newRow = createQueuedPropertyRow(propertyId, propertyInfo);
             queuedPropertiesTable.appendChild(newRow);
-
-            // Remove from available properties
             document.getElementById(`property_${propertyId}`).remove();
+        }
+    });
 
-            // Add event listener to the new "Remove" button
-            newRow.querySelector('.remove-from-queue').addEventListener('click', () => {
-                // Remove from queue
-                newRow.remove();
+    // Remove from Queue: Event Delegation
+    queuedPropertiesTable.addEventListener('click', (event) => {
+        if (event.target.classList.contains('remove-from-queue')) {
+            const button = event.target;
+            const propertyId = button.getAttribute('data-id');
+            const queuedRow = document.getElementById(`queued_${propertyId}`);
+            const propertyInfo = JSON.parse(queuedRow.querySelector('input[name^="particulars"]').dataset.info);
 
-                // Restore to available properties
-                const restoredRow = document.createElement('tr');
-                restoredRow.setAttribute('id', `property_${propertyId}`);
-                restoredRow.innerHTML = `
-                    <td>${propertyInfo.owner.last_name}, ${propertyInfo.owner.first_name}</td>
-                    <td>${propertyInfo.tax_declaration}</td>
-                    <td>${propertyInfo.location}</td>
-                    <td>${propertyInfo.barangay}</td>
-                    <td>${propertyInfo.assess_value}</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-primary add-to-queue"
-                            data-id="${propertyId}"
-                            data-info='${JSON.stringify(propertyInfo)}'>
-                            Add
-                        </button>
-                    </td>
-                `;
-                availablePropertiesTable.appendChild(restoredRow);
+            queuedRow.remove();
 
-                // Reattach add-to-queue listener
-                restoredRow.querySelector('.add-to-queue').addEventListener('click', button.click);
+            const restoredRow = createAvailablePropertyRow(propertyId, propertyInfo);
+            availablePropertiesTable.appendChild(restoredRow);
 
-                // Reapply the search functionality to the restored row
-                searchInput.dispatchEvent(new Event('input'));
-            });
+            searchInput.dispatchEvent(new Event('input'));
+        }
+    });
+
+    // Search Filter: Filter rows in the available table
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const rows = availablePropertiesTable.querySelectorAll('tr');
+        rows.forEach(row => {
+            const ownerText = row.cells[0]?.textContent.toLowerCase() || '';
+            const taxDeclarationText = row.cells[1]?.textContent.toLowerCase() || '';
+            row.style.display = ownerText.includes(query) || taxDeclarationText.includes(query) ? '' : 'none';
         });
     });
 });
-
 
 </script>

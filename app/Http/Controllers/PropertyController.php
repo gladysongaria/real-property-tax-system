@@ -86,7 +86,7 @@ class PropertyController extends Controller
             PaymentTerm::create([
                 'property_id' => $property->id,
                 'paid' => 0,
-                'year' => $year// Default value is unpaid
+                'year' => $year // Default value is unpaid
             ]);
         }
 
@@ -105,24 +105,73 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         //
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'last_name.*' => 'required|string|max:255',
+            'first_name.*' => 'required|string|max:255',
+            'address.*' => 'required|string|max:255',
+            'tax_declaration' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'classification_id' => 'required|exists:classifications,id',
+        ]);
+
+        // Update property
+        $property = Property::findOrFail($id);
+        $property->update([
+            'tax_declaration' => $request->tax_declaration,
+            'location' => $request->location,
+            'classification_id' => $request->classification_id,
+        ]);
+
+        // Update owners
+        foreach ($request->last_name as $index => $lastName) {
+            $ownerId = $request->owner_id[$index] ?? null;
+
+            if ($ownerId) {
+                $owner = Owner::findOrFail($ownerId);
+                $owner->update([
+                    'last_name' => $lastName,
+                    'first_name' => $request->first_name[$index],
+                    'address' => $request->address[$index],
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Property updated successfully.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $property = Property::findOrFail($id);
+
+        // Detach owners and delete associated records
+        foreach ($property->owners as $owner) {
+            $property->owners()->detach($owner->id);
+            $owner->delete(); // Delete owner from database
+        }
+
+        // Delete associated payment terms
+        PaymentTerm::where('property_id', $property->id)->delete();
+
+        // Delete the property itself
+        $property->delete();
+
+        // Redirect or return success message
+        return redirect()->back()->with('success', 'Property and related records deleted successfully.');
     }
 }

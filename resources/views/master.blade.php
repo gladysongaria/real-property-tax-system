@@ -22,13 +22,19 @@
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.css') }}">
 
-    <script src="{{ asset('/assets/jquery.js') }}"type="text/javascript"></script>
+    <script src="{{ asset('/assets/jquery.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/bootstrap5/js/bootstrap.css') }}"></script>
     <script src="{{ asset('') }}assets/bootstrap5/js/bootstrap.js"></script>
     <script src="{{ asset('') }}assets/bootbox/bootbox.js"></script>
     <script src="{{ asset('') }}assets/bootbox/bootbox.all.js"></script>
     @yield('js')
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.json') }}">
+
+    <<link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/css/coreui.min.css" rel="stylesheet"
+        integrity="sha384-u3h5SFn5baVOWbh8UkOrAaLXttgSF0vXI15ODtCSxl0v/VKivnCN6iHCcvlyTL7L" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/js/coreui.bundle.min.js"
+            integrity="sha384-JdRP5GRWP6APhoVS1OM/pOKMWe7q9q8hpl+J2nhCfVJKoS+yzGtELC5REIYKrymn" crossorigin="anonymous">
+        </script>
 
 </head>
 
@@ -53,7 +59,7 @@
         </div>
     </div>
 
-   
+
 
 </body>
 

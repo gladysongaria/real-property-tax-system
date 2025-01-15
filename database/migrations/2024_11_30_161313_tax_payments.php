@@ -11,7 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('tax_payments', function (Blueprint $table) {
+            $table->id();
+            // $table->foreighId('payor_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('or_number');
+            $table->date('or_date');
+            $table->foreignId('property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('term');
+            $table->string('issued_to');
+            $table->string('issued_by');
+            $table->string('tax_due');
+            $table->string('overall_total');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('tax_payments');
     }
 };

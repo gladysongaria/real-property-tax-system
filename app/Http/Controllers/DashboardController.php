@@ -13,12 +13,12 @@ class DashboardController extends Controller
     public function index()
     {
         $statuses = Status::all();
-        $classification = Classification::all();
+        $classifications = Classification::all();
         $properties = Property::with(['owners', 'paymentTerms' => function ($query) {
             $query->where('paid', false);
         }])->get();
         $payment_terms = PaymentTerm::where('paid', 0);
 
-        return view('dashboard', compact('statuses', 'classification', 'properties', 'payment_terms'));
+        return view('dashboard', compact('statuses', 'classifications', 'properties', 'payment_terms'));
     }
 }

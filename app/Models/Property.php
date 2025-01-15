@@ -31,4 +31,14 @@ class Property extends Model
     {
         return $this->hasMany(PaymentTerm::class);
     }
+
+    public function classification()
+    {
+        return $this->belongsTo(Classification::class);
+    }
+
+    public function taxPayments()
+    {
+        return $this->hasMany(TaxPayment::class);
+    }
 }
