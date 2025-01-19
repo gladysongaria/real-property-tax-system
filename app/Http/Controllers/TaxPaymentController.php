@@ -64,6 +64,10 @@ class TaxPaymentController extends Controller
 
     public function getReceipt($orId)
     {
+        $previousRecords = OfficialReceipt::with('orParticulars.property') // Eager load relationships if necessary
+        ->orderBy('or_date', 'desc') // Order by date issued
+        ->get();
+
         $receipt = OfficialReceipt::with('orParticulars.property.classification')->findOrFail($orId);
 
         $receiptData = [];
@@ -114,7 +118,8 @@ class TaxPaymentController extends Controller
             'overall_total_tax_due',
             'overall_basic_payment',
             'overall_sef_payment',
-            'overall_total_payment'
+            'overall_total_payment',
+            'previousRecords'
         ));
     }
 

@@ -127,20 +127,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($previousRecords as $record)
                         <tr>
-                            <td>09-0016-01139</td>
-                            <td>63943303</td>
-                            <td>2023-03-07</td>
-                            <td>Dennis D. Ayochok</td>
-                            <td>158.97</td>
-                            <td>0.00</td>
-                            <td><a href="#">+ more</a></td>
+                            <td>{{ $record->orParticulars->first()->property->tax_declaration ?? 'N/A' }}</td>
+                            <td>{{ $record->or_no }}</td>
+                            <td>{{ $record->or_date }}</td>
+                            <td>{{ $record->issued_to }}</td>
+                            <td>{{ $record->overall_total_payment }}</td>
+                            <td>{{ $record->cash - $record->overall_total_payment }}</td>
+                            <td><a href="">+ more</a></td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
 </div>
 
 @endsection
