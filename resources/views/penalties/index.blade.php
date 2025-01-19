@@ -14,7 +14,7 @@
 
             <div class=" card-body">
 
-                <!--USE DATABLE-->
+                <!--USE DATATABLE-->
                 <table class="table table-bordered table-responsive">
                     <tr>
                         <th>No.</th>
@@ -66,7 +66,7 @@
 
 
 
-<!--PAY TAXES MODAL-->
+<!--PENALTIES MODAL-->
 <div class="modal fade" id="penalties" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -180,5 +180,5 @@
         </div>
     </div>
 </div>
-<!--END OF PAY TAXES MODAL-->
+<!--END OF PENALTIES MODAL-->
 @endsection
