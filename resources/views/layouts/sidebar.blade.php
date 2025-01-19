@@ -30,7 +30,8 @@
                 </li>
 
                 <li>
-                    <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#new_property" type="button">
+                    <a href="#" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#new_property"
+                        type="button">
                         <i class="bi bi-house-add"></i>
                         New Property
                     </a>
@@ -57,7 +58,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link link-dark">
+                    <a href="{{route("penalties.index")}}" class="nav-link link-dark">
                         <i class="bi bi-calculator"></i>
                         Penalties Management
                     </a>

@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenaltyController;
 use App\Http\Controllers\TaxPaymentController;
 
 Route::middleware('auth', 'verified')->group(function () {
@@ -20,12 +21,13 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::resource('properties', PropertyController::class);
+    Route::resource('penalties', PenaltyController::class);
 
     Route::get('/tax-payments', [TaxPaymentController::class, 'index'])->name('taxpayment.index');
     Route::post('/tax-payments/store', [TaxPaymentController::class, 'store'])->name('taxpayment.store');
-    Route::post('/tax-payments/update/{id}', [TaxPaymentController::class, 'update'])->name('taxpayment.update');
     Route::post('/tax-payments/pay-taxes', [TaxPaymentController::class, 'payTaxes'])->name('tax-payments.pay-taxes');
     Route::get('/tax-payments/{id}', [TaxPaymentController::class, 'getReceipt'])->name('tax-payments.get-receipt');
+
 });
 
 require __DIR__ . '/auth.php';
