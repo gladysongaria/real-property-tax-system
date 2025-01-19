@@ -8,4 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Penalty extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'term',
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'jul',
+        'aug',
+        'sept',
+        'oct',
+        'nov',
+        'dec'
+    ];
+
+
 }
