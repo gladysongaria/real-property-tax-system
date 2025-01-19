@@ -14,10 +14,11 @@ class OfficialReceipt extends Model
         'or_date',
         'issued_to',
         'issued_by',
-        'amount_paid',
-        'balance',
-        'penalty',
-        'discount',
+        'overall_basic_payment',
+        'overall_sef_payment',
+        'overall_total_payment',
+        'cash',
+        'change'
     ];
 
     // Relationship with ORParticulars

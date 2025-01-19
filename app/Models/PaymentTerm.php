@@ -15,5 +15,7 @@ class PaymentTerm extends Model
         'paid',        // Indicates payment status (0 = unpaid, 1 = paid)
     ];
 
+    
+
 
 }

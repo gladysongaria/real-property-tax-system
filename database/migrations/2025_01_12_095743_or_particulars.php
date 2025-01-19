@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('or_id')->constrained('official_receipts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('property_id')->constrained('properties')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('term')->nullable();
+            $table->decimal('tax_due', 12, 2)->nullable(); // Changed to decimal
             $table->decimal('penalty', 12, 2)->nullable(); // Changed to decimal
             $table->decimal('discount', 12, 2)->nullable();
-            $table->integer('term')->nullable();
             $table->string('inclusive_years')->nullable();
-            $table->decimal('customer_discount', 12, 2)->nullable();
             $table->decimal('customer_penalty', 12, 2)->nullable();
             $table->integer('customer_last_term')->nullable();
-            $table->string('status')->nullable();
+            $table->decimal('total_tax_due', 12, 2)->nullable();
             $table->timestamps();
         });
     }

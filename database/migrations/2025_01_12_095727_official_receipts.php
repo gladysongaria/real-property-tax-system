@@ -16,9 +16,12 @@ return new class extends Migration
             $table->integer('or_no')->nullable(); // Fixed typo: 'int' to 'integer'
             $table->date('or_date')->nullable();
             $table->string('issued_to')->nullable();
-            $table->string('issued_by')->nullable();
-            $table->decimal('amount_paid', 12, 2)->nullable(); // Changed to 'decimal' for numeric accuracy
-            $table->decimal('balance', 12, 2)->nullable();
+            $table->string('issued_by')->nullable();;
+            $table->decimal('overall_basic_payment', 10, 2)->default(0);
+            $table->decimal('overall_sef_payment', 10, 2)->default(0);
+            $table->decimal('overall_total_payment', 10, 2)->default(0);
+            $table->decimal('cash', 12, 2)->nullable();
+            $table->decimal('change', 12, 2)->nullable();
             $table->timestamps();
         });
     }

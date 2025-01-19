@@ -9,17 +9,20 @@ class ORParticular extends Model
 {
     use HasFactory;
 
+    protected $table = 'or_particulars';
+
     protected $fillable = [
         'or_id',
         'property_id',
+        'term',
+        'tax_due',
         'penalty',
         'discount',
-        'term',
         'inclusive_years',
         'customer_discount',
         'customer_penalty',
         'customer_last_term',
-        'status',
+        'total_tax_due',
     ];
 
     // Relationship with OfficialReceipt

@@ -30,7 +30,7 @@
                         </div>
                     </div>
 
-                    <div class="form-check mb-4">
+                    <div class="mb-4 form-check">
                         <input class="form-check-input" type="checkbox" id="isOwnerTaxpayer" name="is_owner_taxpayer">
                         <label class="form-check-label" for="isOwnerTaxpayer">
                             Owner is the Tax Payer
@@ -53,7 +53,7 @@
 
                     <div class="mt-4">
                         <label for="selectProperties" class="form-label"><strong>Select Property/ies</strong></label>
-                        <input class="form-control mb-3" type="search" id="property_search" placeholder="Search">
+                        <input class="mb-3 form-control" type="search" id="property_search" placeholder="Search">
                     </div>
 
                     <table class="table table-bordered">
@@ -115,7 +115,6 @@
     const queuedPropertiesTable = document.getElementById('queued_properties');
     const searchInput = document.getElementById('property_search');
 
-    // Helper: Create property row for available table
     function createAvailablePropertyRow(propertyId, propertyInfo) {
         const restoredRow = document.createElement('tr');
         restoredRow.setAttribute('id', `property_${propertyId}`);
@@ -136,13 +135,14 @@
         return restoredRow;
     }
 
-    // Helper: Create property row for queued table
     function createQueuedPropertyRow(propertyId, propertyInfo) {
         const paymentTerms = propertyInfo.payment_terms || [];
         let termOptions = '';
 
         paymentTerms.forEach(term => {
-            termOptions += `<option value="${term.id}">${term.year}</option>`;
+            if (!term.paid) {
+                termOptions += `<option value="${term.id}">${term.year}</option>`;
+            }
         });
 
         const newRow = document.createElement('tr');
@@ -161,12 +161,12 @@
                     Remove
                 </button>
                 <input type="hidden" name="particulars[${propertyId}][property_id]" value="${propertyId}">
+                <input type="hidden" data-info='${JSON.stringify(propertyInfo)}'>
             </td>
         `;
         return newRow;
     }
 
-    // Add to Queue: Event Delegation
     availablePropertiesTable.addEventListener('click', (event) => {
         if (event.target.classList.contains('add-to-queue')) {
             const button = event.target;
@@ -182,13 +182,12 @@
         }
     });
 
-    // Remove from Queue: Event Delegation
     queuedPropertiesTable.addEventListener('click', (event) => {
         if (event.target.classList.contains('remove-from-queue')) {
             const button = event.target;
             const propertyId = button.getAttribute('data-id');
             const queuedRow = document.getElementById(`queued_${propertyId}`);
-            const propertyInfo = JSON.parse(queuedRow.querySelector('input[name^="particulars"]').dataset.info);
+            const propertyInfo = JSON.parse(queuedRow.querySelector('input[data-info]').dataset.info);
 
             queuedRow.remove();
 
@@ -199,16 +198,19 @@
         }
     });
 
-    // Search Filter: Filter rows in the available table
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase();
         const rows = availablePropertiesTable.querySelectorAll('tr');
+
+        function isMatch(query, ...fields) {
+            return fields.some(field => field.toLowerCase().includes(query));
+        }
+
         rows.forEach(row => {
             const ownerText = row.cells[0]?.textContent.toLowerCase() || '';
             const taxDeclarationText = row.cells[1]?.textContent.toLowerCase() || '';
-            row.style.display = ownerText.includes(query) || taxDeclarationText.includes(query) ? '' : 'none';
+            row.style.display = isMatch(query, ownerText, taxDeclarationText) ? '' : 'none';
         });
     });
 });
-
 </script>
