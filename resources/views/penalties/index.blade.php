@@ -17,20 +17,20 @@
                 <!--USE DATATABLE-->
                 <table class="table table-bordered table-responsive">
                     <tr>
-                        <th>Year(from)</th>
-                        <th>Year(To)</th>
-                        <th>Jan(%)</th>
-                        <th>Feb(%)</th>
-                        <th>Mar(%)</th>
-                        <th>Apr(%)</th>
-                        <th>May(%)</th>
-                        <th>Jun(%)</th>
-                        <th>Jul(%)</th>
-                        <th>Aug(%)</th>
-                        <th>Sept(%)</th>
-                        <th>Oct(%)</th>
-                        <th>Nov(%)</th>
-                        <th>Dec(%)</th>
+                        <th>Year<br>(from)</th>
+                        <th>Year<br>(To)</th>
+                        <th>Jan<br>(%)</th>
+                        <th>Feb<br>(%)</th>
+                        <th>Mar<br>(%)</th>
+                        <th>Apr<br>(%)</th>
+                        <th>May<br>(%)</th>
+                        <th>Jun<br>(%)</th>
+                        <th>Jul<br>(%)</th>
+                        <th>Aug<br>(%)</th>
+                        <th>Sept<br>(%)</th>
+                        <th>Oct<br>(%)</th>
+                        <th>Nov<br>(%)</th>
+                        <th>Dec<br>(%)</th>
                         <th>Action</th>
 
                     </tr>
