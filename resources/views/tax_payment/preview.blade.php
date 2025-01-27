@@ -12,7 +12,7 @@
     <form action="{{ route('taxpayment.store') }}" method="POST">
         @csrf
         <div class="row">
-            <p>Details</p>
+            <H4>Details</H4>
             <div class="container">
                 <div class="row">
                     <div class="col-6 offset-sm-1">
