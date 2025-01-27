@@ -31,8 +31,11 @@
             </div>
         </div>
         <div class="row">
-            <label for="payment"><strong>Payment:</strong></label>
-            <input type="number" name="cash" id="payment" class="form-control d-inline" style="width: auto;" required>
+            <div class="col-2">
+                    <label for="payment"><strong>Payment:</strong></label>
+                    <input type="number" name="cash" id="payment" class="form-control d-inline" style="width: auto;"
+                        required>
+                </div>
         </div>
         <br><br>
         <h4>Particulars</h4>
@@ -98,7 +101,7 @@
                 </tr>
 
                 <tr>
-                    <td colspan="8" class="text-end">
+                    <td colspan="9" class="text-end">
                         Overall Total: <strong>{{ number_format($overall_total_tax_due, 2) }}</strong>
                         <input type="hidden" name="overall_total_tax_due" value="{{ $overall_total_tax_due }}">
                     </td>
