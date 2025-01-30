@@ -46,7 +46,7 @@
             <h6 class="mb-2 card-subtitle text-muted">Modules</h6>
             <ul class="mb-auto nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a href="#" class="nav-link link-dark" aria-current="page">
+                    <a href="{{route("reports.index")}}" class="nav-link link-dark" aria-current="page">
                         <i class="bi bi-bar-chart-steps"></i>
                         <span>Reports</span>
                     </a>
