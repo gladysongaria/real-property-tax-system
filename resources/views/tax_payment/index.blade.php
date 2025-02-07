@@ -156,6 +156,7 @@
                     ${termOptions}
                 </select>
             </td>
+            <td> <input class="form-control" type="number" name="yearto" value=""></td>
             <td>
                 <button type="button" class="btn btn-sm btn-danger remove-from-queue" data-id="${propertyId}">
                     Remove
