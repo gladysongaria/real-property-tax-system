@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenaltyController;
 use App\Http\Controllers\TaxPaymentController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\TransactionsController;
+
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -23,6 +25,7 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::resource('properties', PropertyController::class);
     Route::resource('penalties', PenaltyController::class);
+    Route::get('transactions', [TransactionsController::class, 'index'])->name('transactions.index');
     Route::get('reports', [ReportsController::class, 'index'])->name('reports.index');
     Route::get('/tax-payments', [TaxPaymentController::class, 'index'])->name('taxpayment.index');
     Route::post('/tax-payments/store', [TaxPaymentController::class, 'store'])->name('taxpayment.store');
