@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link link-dark">
+                    <a href="{{route("transactions.index")}}" class="nav-link link-dark">
                         <i class="fa fa-university" aria-hidden="true"></i>
                         Transaction Reports
                     </a>
