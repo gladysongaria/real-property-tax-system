@@ -148,12 +148,91 @@
                     @endforeach
                 </tbody>
             </table>
+            <hr>
+            <div class=" card">
+                <h5 class=" card-header">Signatories
+                </h5>
+                <br>
+                <div class="col-2 offset-11">
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addSignatory">
+                        <i class="bi bi-plus">Add</i>
+                    </button>
+                </div>
+                <div class=" card-body">
+
+                    <!--USE DATATABLE-->
+                    <table class="table table-bordered table-responsive">
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                        <tr>
+                            <td>Juan Tamad</td>
+                            <td>LTOO II</td>
+                            <td>Treasury</td>
+
+                            <td><button class="btn btn-sm btn-primary"><i class="bi bi-pen"></i></button> <button
+                                    class="btn btn-sm btn-danger"> <i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
         </div>
         <!--row-->
 
     </div>
     <!--container-->
 </div>
+
+<!-- MODAL-->
+
+<div class="modal fade" id="addSignatory" tabindex="-1" aria-labelledby="addSignatory" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSignatory">Add Signatory</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><strong>Full Name</strong></label>
+                            <input name='fullname' type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><strong>Position</strong></label>
+                            <input name='position' type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><strong>Office</strong></label>
+                            <input name='office' type="email" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">Save</button>
+                <button type="submit" class="btn btn-danger " data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @else
 <div class="row">
