@@ -67,10 +67,10 @@ class PenaltyController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
+        // Validate request
         $validatedData = $request->validate([
-            'term' => 'required|integer', // The starting year
-            'to_year' => 'nullable|integer', // The ending year, optional
+            'term' => 'required|integer', // Current year being added
+            'to_year' => 'nullable|integer',
             'jan' => 'required|numeric',
             'feb' => 'required|numeric',
             'mar' => 'required|numeric',
@@ -85,42 +85,94 @@ class PenaltyController extends Controller
             'dec' => 'required|numeric',
         ]);
 
-        // Get the starting year (term)
-        $startYear = $validatedData['term'];
+        $newYear = $validatedData['term']; // The year being added (e.g., 2025)
+        $previousYear = $newYear - 1; // The year before the new entry (2024)
+        $twoYearsBefore = $newYear - 2; // 2023
+        $threeYearsBefore = $newYear - 3; // 2022
 
-        // Get the ending year (to_year) or use the starting year if not provided
-        $endYear = $validatedData['to_year'] ?? $startYear;
+        // STEP 1: Save user input for the current year
+        $penalty = Penalty::updateOrCreate(
+            ['term' => $newYear],
+            [
+                'jan' => $validatedData['jan'],
+                'feb' => $validatedData['feb'],
+                'mar' => $validatedData['mar'],
+                'apr' => $validatedData['apr'],
+                'may' => $validatedData['may'],
+                'jun' => $validatedData['jun'],
+                'jul' => $validatedData['jul'],
+                'aug' => $validatedData['aug'],
+                'sept' => $validatedData['sept'],
+                'oct' => $validatedData['oct'],
+                'nov' => $validatedData['nov'],
+                'dec' => $validatedData['dec'],
+            ]
+        );
 
-        // Loop through each year from start to end
-        for ($year = $startYear; $year <= $endYear; $year++) {
-            // Create a new penalty record for each year
-            $penalty = new Penalty();
+        // STEP 2: Shift values for previous years
+        $previousYearPenalty = Penalty::where('term', $previousYear)->first();
+        $twoYearsBeforePenalty = Penalty::where('term', $twoYearsBefore)->first();
+        $threeYearsBeforePenalty = Penalty::where('term', $threeYearsBefore)->first();
+        $referencePenalty = Penalty::whereBetween('term', [1992, 2021])->first(); // Get reference for 2022
 
-            // Set the values for the penalty record
-            $penalty->term = $year;  // Set the term (year)
-            $penalty->jan = $validatedData['jan'];
-            $penalty->feb = $validatedData['feb'];
-            $penalty->mar = $validatedData['mar'];
-            $penalty->apr = $validatedData['apr'];
-            $penalty->may = $validatedData['may'];
-            $penalty->jun = $validatedData['jun'];
-            $penalty->jul = $validatedData['jul'];
-            $penalty->aug = $validatedData['aug'];
-            $penalty->sept = $validatedData['sept'];
-            $penalty->oct = $validatedData['oct'];
-            $penalty->nov = $validatedData['nov'];
-            $penalty->dec = $validatedData['dec'];
-            $penalty->created_at = now();
-            $penalty->updated_at = now();
-
-            // Save the penalty record for the current year
-            $penalty->save();
+        if ($previousYearPenalty) {
+            // 2024 takes values from 2023
+            $previousYearPenalty->update([
+                'jan' => $twoYearsBeforePenalty->jan ?? $previousYearPenalty->jan,
+                'feb' => $twoYearsBeforePenalty->feb ?? $previousYearPenalty->feb,
+                'mar' => $twoYearsBeforePenalty->mar ?? $previousYearPenalty->mar,
+                'apr' => $twoYearsBeforePenalty->apr ?? $previousYearPenalty->apr,
+                'may' => $twoYearsBeforePenalty->may ?? $previousYearPenalty->may,
+                'jun' => $twoYearsBeforePenalty->jun ?? $previousYearPenalty->jun,
+                'jul' => $twoYearsBeforePenalty->jul ?? $previousYearPenalty->jul,
+                'aug' => $twoYearsBeforePenalty->aug ?? $previousYearPenalty->aug,
+                'sept' => $twoYearsBeforePenalty->sept ?? $previousYearPenalty->sept,
+                'oct' => $twoYearsBeforePenalty->oct ?? $previousYearPenalty->oct,
+                'nov' => $twoYearsBeforePenalty->nov ?? $previousYearPenalty->nov,
+                'dec' => $twoYearsBeforePenalty->dec ?? $previousYearPenalty->dec,
+            ]);
         }
 
-        // Redirect back with success message
-        return redirect()->route('penalties.index')->with('success', 'Penalties for the given term and range of years successfully saved.');
-    }
+        if ($twoYearsBeforePenalty) {
+            // 2023 takes values from 2022
+            $twoYearsBeforePenalty->update([
+                'jan' => $threeYearsBeforePenalty->jan ?? $twoYearsBeforePenalty->jan,
+                'feb' => $threeYearsBeforePenalty->feb ?? $twoYearsBeforePenalty->feb,
+                'mar' => $threeYearsBeforePenalty->mar ?? $twoYearsBeforePenalty->mar,
+                'apr' => $threeYearsBeforePenalty->apr ?? $twoYearsBeforePenalty->apr,
+                'may' => $threeYearsBeforePenalty->may ?? $twoYearsBeforePenalty->may,
+                'jun' => $threeYearsBeforePenalty->jun ?? $twoYearsBeforePenalty->jun,
+                'jul' => $threeYearsBeforePenalty->jul ?? $twoYearsBeforePenalty->jul,
+                'aug' => $threeYearsBeforePenalty->aug ?? $twoYearsBeforePenalty->aug,
+                'sept' => $threeYearsBeforePenalty->sept ?? $twoYearsBeforePenalty->sept,
+                'oct' => $threeYearsBeforePenalty->oct ?? $twoYearsBeforePenalty->oct,
+                'nov' => $threeYearsBeforePenalty->nov ?? $twoYearsBeforePenalty->nov,
+                'dec' => $threeYearsBeforePenalty->dec ?? $twoYearsBeforePenalty->dec,
+            ]);
+        }
 
+        if ($threeYearsBeforePenalty) {
+            // 2022 takes values from 1992-2021
+            if ($referencePenalty) {
+                $threeYearsBeforePenalty->update([
+                    'jan' => $referencePenalty->jan,
+                    'feb' => $referencePenalty->feb,
+                    'mar' => $referencePenalty->mar,
+                    'apr' => $referencePenalty->apr,
+                    'may' => $referencePenalty->may,
+                    'jun' => $referencePenalty->jun,
+                    'jul' => $referencePenalty->jul,
+                    'aug' => $referencePenalty->aug,
+                    'sept' => $referencePenalty->sept,
+                    'oct' => $referencePenalty->oct,
+                    'nov' => $referencePenalty->nov,
+                    'dec' => $referencePenalty->dec,
+                ]);
+            }
+        }
+
+        return redirect()->route('penalties.index')->with('success', 'Penalties updated successfully.');
+    }
 
     /**
      * Display the specified resource.

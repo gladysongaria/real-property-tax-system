@@ -45,6 +45,7 @@
                                 <th scope="col">Barangay</th>
                                 <th scope="col">Assessed Value</th>
                                 <th scope="col">Term</th>
+                                <th scope="col">To (Optional)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -93,6 +94,7 @@
                                         Terms</button>
                                     @endif
                                 </td>
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -156,7 +158,11 @@
                     ${termOptions}
                 </select>
             </td>
-            <td> <input class="form-control" type="number" name="yearto" value=""></td>
+             <td>
+                <select name="particulars[${propertyId}][term]" class="form-select" required>
+                    ${termOptions}
+                </select>
+            </td>
             <td>
                 <button type="button" class="btn btn-sm btn-danger remove-from-queue" data-id="${propertyId}">
                     Remove
