@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('or_id')->constrained('official_receipts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('property_id')->constrained('properties')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('term')->nullable();
+            $table->integer('to')->nullable();
             $table->decimal('tax_due', 12, 2)->nullable(); // Changed to decimal
             $table->decimal('penalty', 12, 2)->nullable(); // Changed to decimal
             $table->decimal('discount', 12, 2)->nullable();

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('or_date');
             $table->foreignId('property_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->integer('term');
+            $table->integer('to');
             $table->string('issued_to');
             $table->string('issued_by');
             $table->string('tax_due');

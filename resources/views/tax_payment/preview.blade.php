@@ -48,6 +48,7 @@
                     <th>Classification</th>
                     <th>Tax Dec</th>
                     <th>Term</th>
+                    <th>To</th>
                     <th>Assessed Value</th>
                     <th>Tax Due</th>
                     <th>Amount to Pay</th>
@@ -75,6 +76,7 @@
                             class="form-control" required>
                         {{ ($data['term']) }}
                     </td>
+                    <td></td>
                     <td>{{ number_format($data['assess_value'], 2) }}</td>
                     <td>
                         <input type="hidden" name="particulars[{{$loop->index}}][tax_due]"

@@ -45,7 +45,7 @@
                                 <th scope="col">Barangay</th>
                                 <th scope="col">Assessed Value</th>
                                 <th scope="col">Term</th>
-                                <th scope="col">To (Optional)</th>
+                                <th scope="col">To</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -94,7 +94,6 @@
                                         Terms</button>
                                     @endif
                                 </td>
-
                             </tr>
                             @endforeach
                         </tbody>

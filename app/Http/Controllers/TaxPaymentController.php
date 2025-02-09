@@ -272,13 +272,13 @@ class TaxPaymentController extends Controller
             $paymentTerm = PaymentTerm::where('property_id', (int)$particular['property_id'])
             ->where('id', (int)$particular['term'])
             ->first();
-        
+
             if ($paymentTerm) {
                 $paymentTerm->update(['paid' => 1]);
             } else {
                 dd('No matching PaymentTerm found.');
             }
-            
+
         }
 
         return redirect()->route('dashboard')->with('success', 'Official Receipt and particulars successfully saved.');
