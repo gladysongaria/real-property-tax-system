@@ -1,4 +1,7 @@
 @extends('master')
+@section('js')
+<script src="{{ asset('assets/dashboard/dashboard.js') }}"></script>
+@endsection
 @section('content')
 
 <div class=" content_custi" style="width: 100%;">
