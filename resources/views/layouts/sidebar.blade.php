@@ -82,11 +82,10 @@
             <br>
             <br>
             <div class="footer">
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" id="logoutform" action="{{ route('logout') }}">
                     @csrf
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <a class="link-secondary" :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">Logout
+                    <a class="link-secondary" id="logout">Logout
                     </a>
                 </form>
             </div>
