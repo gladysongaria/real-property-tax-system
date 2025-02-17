@@ -16,7 +16,8 @@
                 <th>Location</th>
                 <th>Classification</th>
                 <th>Tax Dec</th>
-                <th>Term</th>
+                <th>Term<br>(from)</th>
+                 <th>Term<br>(to)</th>
                 <th>Assessed Value</th>
                 <th>Tax Due</th>
                 <th>Payment</th>
@@ -52,6 +53,7 @@
                             <td>{{ $particular->property->location }}</td>
                             <td>{{ $particular->property->classification->classification_name }}</td>
                             <td>{{ $particular->property->tax_declaration }}</td>
+                            <td>{{ $particular->term }}</td>
                             <td>{{ $particular->term }}</td>
                             <td>{{ number_format($assessedValue, 2) }}</td>
                             <td>{{ number_format($taxDue, 2) }}</td>
