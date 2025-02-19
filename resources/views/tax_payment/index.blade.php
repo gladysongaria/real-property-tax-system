@@ -30,12 +30,24 @@
                         </div>
                     </div>
 
-                    <div class="mb-4 form-check">
-                        <input class="form-check-input" type="checkbox" id="isOwnerTaxpayer" name="is_owner_taxpayer">
-                        <label class="form-check-label" for="isOwnerTaxpayer">
-                            Owner is the Tax Payer
-                        </label>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4 form-check">
+                                <input class="form-check-input" type="checkbox" id="isOwnerTaxpayer"
+                                    name="is_owner_taxpayer">
+                                <label class="form-check-label" for="isOwnerTaxpayer">
+                                    Owner is the Tax Payer
+                                </label>
+                            </div>
+                            <div class="col-4 form-check ">
+                                <input class="form-check-input" type="checkbox" id="noPenaltyApplied" name="no_penalty">
+                                <label class="form-check-label" for="noPenaltyApplied">
+                                    No Penalty
+                                </label>
+                            </div>
+                        </div>
                     </div>
+                    <hr>
 
                     <p><strong>Queued Property/ies</strong></p>
                     <table class="table table-bordered">
