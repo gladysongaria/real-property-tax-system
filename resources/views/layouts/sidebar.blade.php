@@ -2,11 +2,11 @@
     <div class="p-1">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+               <!-- <div class="col-12">
                     <div class="form-outline" data-mdb-input-init>
                         <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
