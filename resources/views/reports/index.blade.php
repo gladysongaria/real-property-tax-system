@@ -95,22 +95,41 @@
             <div class="row">
                 <div class="col-2 ">
                     <h4>
-                        <centeR> <a href="#" class="btn btn-default"><i class="bi bi-houses"
+                        <centeR> <a href="{{route('reports.blgf')}}" class="btn btn-default"><i class="bi bi-houses"
                                     style=" color:rgb(7, 117, 35); font-size:6rem"></i><strong>BLGF</strong></a>
                         </centeR>
                     </h4>
                 </div>
-                <div class="col-2  offset-1">
+                <div class="col-2">
                     <h4>
-                        <centeR> <a href="#" class="btn btn-default"><i class="bi bi-cash"
-                                    style=" color:rgb(7, 117, 35); font-size:6rem"></i><strong>Tax Roll</strong></a>
+                        <centeR> <a href="{{route('reports.taxrollIndex')}}" class="btn btn-default"><i
+                                    class="bi bi-cash" style=" color:rgb(7, 117, 35); font-size:6rem"></i><strong>Tax
+                                    Roll</strong></a>
                         </centeR>
                     </h4>
                 </div>
                 <div class="col-2 ">
                     <h4>
-                        <centeR> <a href="#" class="btn btn-default"><i class="bi bi-house-fill"
+                        <centeR> <a href="{{route('reports.brgyShare')}}" class="btn btn-default"><i
+                                    class="bi bi-house-fill"
                                     style=" color:rgb(7, 117, 35); font-size:6rem"></i><strong>Brgy Share</strong></a>
+                        </centeR>
+                    </h4>
+                </div>
+                <div class="col-2 ">
+                    <h4>
+                        <centeR> <a href="{{route('reports.certificateOfPayment')}}" class="btn btn-default"><i
+                                    class="bi bi-printer"
+                                    style=" color:rgb(7, 117, 35); font-size:6rem"></i><strong>Certificates <br>of
+                                    Payment</strong></a>
+                        </centeR>
+                    </h4>
+                </div>
+                <div class="col-2 ">
+                    <h4>
+                        <centeR> <a href="{{route('reports.delinquency')}}" class="btn btn-default"><i
+                                    class="bi bi-folder"
+                                    style=" color:rgb(7, 117, 35); font-size:6rem"></i><strong>Delinquencies</strong></a>
                         </centeR>
                     </h4>
                 </div>
